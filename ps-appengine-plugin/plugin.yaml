@@ -1,0 +1,90 @@
+name: ps-appengine plugin
+version: 1.0
+rundeckPluginVersion: 1.0
+author: JR Bing
+date: 2016-01-28
+providers:
+  - name: ps-appengine
+    service: RemoteScriptNodeStep
+    title: PS AppEngine
+    description: Executes the specified PeopleSoft AppEngine program on a remote node
+    plugin-type: script
+    script-interpreter: /bin/bash
+    script-file: psae.sh
+    script-args: '${config.database_type} ${config.database_name} ${config.process_scheduler_domain} ${config.app_username} ${config.app_password} ${config.appengine_program} ${config.runcontrol_id} ${config.process_instance} ${config.debug_flag} ${config.trace} ${config.toolstracesql} ${config.toolstracepc}'
+    config:
+      - type: Select
+        name: database_type
+        title: Type
+        description: Database Type
+        default: ORACLE
+        required: true
+        values:
+          - ORACLE
+      - type: String
+        name: database_name
+        title: Database Name
+        description: Environment database name
+        required: true
+        default:
+      - type: String
+        name: process_scheduler_domain
+        title: Process Scheduler Domain
+        description: Process Scheduler Domain to use
+        required: true
+        default:
+      - type: String
+        name: app_username
+        title: Username
+        description: Application username
+        required: true
+        default:
+      - type: String
+        name: app_password
+        title: Password
+        description: Application password
+        required: true
+        secure: true
+        default:
+      - type: String
+        name: appengine_program
+        title: AppEngine Program
+        description: Name of the AppEngine program to be executed
+        required: true
+        default:
+      - type: String
+        name: runcontrol_id
+        title: Runcontrol ID
+        description: Runcontrol ID to be used
+        required: true
+        default: ADHOC
+      - type: Integer
+        name: process_instance
+        title: Process Instance
+        description: The default is 0, which means Application Engine will use the next available process instance
+        required: true
+        default: 0
+      - type: Integer
+        name: trace
+        title: Trace
+        description: Enter the sum of the trace values you wish to enable.  Traces and values can be found at http://docs.oracle.com/cd/E66686_01/pt855pbr0/eng/pt/tape/task_RunningApplicationEnginePrograms-077187.html
+        required: true
+        default: 0
+      - type: Boolean
+        name: debug_flag
+        title: Debug
+        description: Enable debug mode
+        required: true
+        default: false
+      - type: Boolean
+        name: toolstracesql
+        title: PeopleTools SQL Trace
+        description: Enable SQL tracing for PeopleTools events
+        required: true
+        default: false
+      - type: Boolean
+        name: toolstracepc
+        title: PeopleTools PeopleCode Trace
+        description: Enable PeopleCode tracing for PeopleTools events
+        required: true
+        default: false
